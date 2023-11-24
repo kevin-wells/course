@@ -1,0 +1,45 @@
+name: test
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        type: denvironment
+        required: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: echo 'Build'
+    
+  Test:
+    needs: Build
+    runs-on:  ubuntu-latest
+      steps:
+        - name: Test
+          run: echo 'Testing...'
+    
+  Load-Test:
+    needs: Test
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Load Test
+        run: echo 'Testing...'
+      
+  Production:
+    needs:
+      Test
+      Load-Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo 'Step 1 ...'
+      - name: Step 2
+        run: echo 'Step 2 ...'
+      - name: Step 3
+        run: echo 'Step 3 ...'
+      - name: Step 4
+        run: echo 'Step 4 ...'
